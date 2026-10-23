@@ -11,8 +11,9 @@ TRAIN_CLIENTS, FORGET, CONTROL = list(range(10)), 9, list(range(10, 20))   # cli
 TRAIN_END, VAL_END, WINDOW_STRIDE = 0.70, 0.80, 4
 EPOCHS, BATCH, LR = 20, 128, 1e-3
 ARCHS = ["dlinear", "mlp", "patchtst"]
-SEEDS = {"dlinear": [5, 6], "mlp": [4, 5], "patchtst": [2]}      # fresh seeds, trained after the method was designed (seed 0, the design seed, can be run as exploratory)
-FRESH = {"dlinear": [5, 6], "mlp": [4, 5], "patchtst": [2]}      # the gate is judged on these only
+SEEDS = {"dlinear": [5, 6], "mlp": [4, 5], "patchtst": [2, 3]}      # fresh seeds, trained after the method was designed (seed 0, the design seed, can be run as exploratory)
+FRESH = {"dlinear": [5, 6], "mlp": [4, 5], "patchtst": [2]}
+REPLICATION = {"patchtst": [3]}        # extra seed added after the round-3 verdict, to check the PatchTST result (docs/ADDENDUM.md)      # the gate is judged on these only
 
 # ---- quantization: post-training, weights of every Linear layer, signed integers ----
 BITS = [8, 6, 4, 3, 2]
