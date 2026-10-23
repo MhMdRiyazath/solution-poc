@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.log
+data/
+checkpoints/
+.DS_Store
+results/train.log
+results/train*.log
