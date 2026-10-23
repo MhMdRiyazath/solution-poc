@@ -1,5 +1,7 @@
 # Results, round 3: our own method TPU (rules in docs/DESIGN.md were committed before the fresh-seed runs)
 
+**Update after the extra-seed test (see Addendum at the end): the PatchTST result below did NOT replicate on a second seed (4 of 9 cells instead of 8 of 9). Read the PatchTST numbers as one lucky seed plus one weaker seed.**
+
 Tables: `results/RESULTS_TABLES.md`. Verdict as computed: `results/verdict.md`. Raw: `results/raw_*.csv`. Figure: `figures/r3.png`.
 Fresh seeds: DLinear 5,6; MLP 4,5; PatchTST 2 (trained after the method was frozen). 3 quantizers x INT8/6/4 = 27 cells; a cell passes when every fresh seed passes the strict rule (forget score 0.8-1.2, retain ratio <= 1.10).
 
@@ -26,3 +28,11 @@ TPU, with stochastic rounding and no full-precision copy, makes unlearning work 
 
 ## Limits
 One seed for PatchTST, two for the others; settings were selected on one design seed in full precision with the retrained model as judge and then frozen; only two methods in this table; simulated integers, biases/norms in full precision; one dataset and forgotten client. Items 1-2 and 4-7 are descriptive and partly after the fact.
+
+## Addendum: extra PatchTST seed (rules in docs/ADDENDUM.md, committed before the run; details in `results/replication.md`)
+New seed 3, nothing re-tuned. **Replication: not confirmed.**
+- R1, TPU in full precision passes: no (forget score 0.64, retain 1.07).
+- R2, TPU + stochastic rounding passes at least 6 of 9 cells: no, 4 of 9 (INT8 2/3, INT6 0/3, INT4 2/3).
+- R3, MaxLoss + stochastic passes at most 2 of 9: yes, 0 of 9. TPU + nearest rounding passes 1 of 9.
+- With both PatchTST seeds, a cell passes only if both pass: 4 of 9 cells.
+What this changes: the claim "TPU forgets correctly on a quantized PatchTST in 8 of 9 cells" is withdrawn; the supported claim is that TPU beats the borrowed method clearly (0 of 9 for MaxLoss on both seeds), keeps the kept clients intact on every run of this seed (retain 1.02 to 1.08, all under the 1.10 limit), and forgets substantially in every cell, but its forget score lands outside the 0.8-1.2 window in 5 of 9 cells (overshoot 1.24, 1.24, 1.48; undershoot 0.37, 0.53): the stop target is not accurate enough, the same failure seen on DLinear and MLP. So across all three models the weak point is the same, the reference-free target, and kept-client damage is not the main problem for TPU.

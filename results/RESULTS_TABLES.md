@@ -10,7 +10,9 @@ A cell passes when all fresh seeds pass the strict rule (forget score 0.8-1.2, r
 | dlinear  | TPU fp     | True    |       2 | False    |    0.71 |     1    |    1600 |
 | mlp      | MaxLoss fp | True    |       2 | False    |    0.67 |     1.17 |      72 |
 | mlp      | TPU fp     | True    |       2 | False    |    0.71 |     1.1  |     220 |
+| patchtst | MaxLoss fp | False   |       1 | False    |    1.11 |     1.18 |      74 |
 | patchtst | MaxLoss fp | True    |       1 | False    |    0.36 |     1.08 |      32 |
+| patchtst | TPU fp     | False   |       1 | False    |    0.64 |     1.07 |      56 |
 | patchtst | TPU fp     | True    |       1 | True     |    1.04 |     1.08 |     210 |
 
 ## dlinear: strict pass per cell (fresh seeds)
